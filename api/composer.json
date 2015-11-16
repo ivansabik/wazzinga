@@ -1,0 +1,6 @@
+{
+    "require": {
+        "whatsapp/chat-api": "v2.5.5.4",
+        "slim/slim": "^2.6"
+    }
+}
