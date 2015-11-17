@@ -4,39 +4,38 @@ require_once './vendor/whatsapp/chat-api/src/Registration.php';
 require_once './vendor/whatsapp/chat-api/src/whatsprot.class.php';
 
 $app = new \Slim\Slim();
-$app->response->headers->set('Content-Type', 'application/json');
 
 // Get code by SMS
 $app->get('/v1/code', function () use ($app) {
+    $app->response->headers->set('Content-Type', 'application/json');
     $username = $app->request()->get('number');
-    $debug = false;
-    $w = new Registration($username, $debug);
+    $w = new Registration($username);
     echo json_encode($w->codeRequest('sms'));
 });
 
 // Register code 
 $app->get('/v1/register', function () use ($app) {
+    $app->response->headers->set('Content-Type', 'application/json');
     $username = $app->request()->get('number');
-    $debug = false;
-    $w = new Registration($username, $debug);
+    $w = new Registration($username);
     echo json_encode($w->codeRegister('sms'));
 });
 // Send message
-$app->get('/v1/send', function () use ($app) {
+$app->post('/v1/send', function () use ($app) {
     $nodes = _readClientNodes();
     $node = $nodes[array_rand($nodes)];
     $sender = $node['number'];
     $password = $node['pass'];
-    $destination = $app->request()->get('destination');
-    $message = $app->request()->get('message');
-    $debug = true;
-    $w = new WhatsProt($sender, 'wazzinga', $debug);
+    $destination = $app->request()->post('destination');
+    $message = $app->request()->post('message');
+    $w = new WhatsProt($sender, 'wazzinga', true);
     $w->connect();
     $w->loginWithPassword($password);
     $w->sendMessage($destination, $message);
 });
 // List client nodes
 $app->get('/v1/nodes', function () use ($app) {
+    $app->response->headers->set('Content-Type', 'application/json');
     $nodes = _readClientNodes();
     echo json_encode($nodes);
 });
