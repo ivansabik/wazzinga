@@ -17,8 +17,9 @@ $app->get('/v1/code', function () use ($app) {
 $app->get('/v1/register', function () use ($app) {
     $app->response->headers->set('Content-Type', 'application/json');
     $username = $app->request()->get('number');
+    $code = $app->request()->get('code');
     $w = new Registration($username);
-    echo json_encode($w->codeRegister('sms'));
+    echo json_encode($w->codeRegister($code));
 });
 // Send message
 $app->post('/v1/send', function () use ($app) {
