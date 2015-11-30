@@ -12,13 +12,21 @@ HTTP API for sending anonymous Whatsapp messages using a list of client nodes, p
 
 ## API endpoints
 
+- /v1/code?number=5215587162718
+- /v1/register?code=519039&number=5215587162718
+- /v1/send
+- /v1/nodes
+
+number: 52993177437
+message: Howdie ho
+
 ### GET /v1/code
 
 | Parameter | Default | Description                               |
 |-----------|---------|-------------------------------------------|
 | number    | none    | Number where the code will be sent by SMS |
 
-Example response:
+GET http://localhost:8000/api.php/v1/code?number=5215587162718
 
 ```javascript
 {
@@ -36,7 +44,7 @@ Example response:
 | number    | none    | Number to be registered |
 | code      | none    | Code received by SMS    |
 
-Example response:
+GET http://localhost:8000/api.php/v1/register?code=519039&number=5215587162718
 
 ```javascript
 {
@@ -60,9 +68,26 @@ Example response:
 | destination | none    | Destination number |
 | message     | none    | Message            |
 
+POST http://localhost:8000/api.php/v1/send
+
+number: 52993177437
+message: Howdie ho
+
+```javascript
+{
+}
+```
+
 ### GET /v1/nodes
 
-List of active nodes used to send messages
+Takes no paramenters, used to get a list of nodes and their status.
+
+GET http://localhost:8000/api.php/v1/nodes
+
+```javascript
+{
+}
+```
 
 ## Requirements and quick installation
 

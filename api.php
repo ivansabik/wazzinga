@@ -23,8 +23,8 @@ $app->get('/v1/register', function () use ($app) {
 });
 // Send message
 $app->post('/v1/send', function () use ($app) {
-    $nodes = _readClientNodes();
-    $node = $nodes[array_rand($nodes)];
+    $app->response->headers->set('Content-Type', 'application/xml');
+    $node = _assignNode();
     $sender = $node['number'];
     $password = $node['pass'];
     $destination = $app->request()->post('destination');
@@ -46,4 +46,10 @@ $app->run();
 function _readClientNodes() {
   $nodes = include('./nodes.php');
   return $nodes;
+}
+
+function _assignNode() {
+  $nodes = include('./nodes.php');
+  $node = $nodes[array_rand($nodes)];
+  return $node;
 }
